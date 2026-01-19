@@ -17,7 +17,7 @@ const EXAMPLE_TASKS = [
   'Go to example.com and tell me what\'s there',
 ];
 
-export function TaskInput({ onSubmit, visionModeSupported = true }: TaskInputProps): React.ReactElement {
+export function TaskInput({ onSubmit, visionModeSupported = false }: TaskInputProps): React.ReactElement {
   const [task, setTask] = useState('');
   const [visionMode, setVisionMode] = useState(false);
 
