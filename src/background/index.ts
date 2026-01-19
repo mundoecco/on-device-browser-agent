@@ -36,9 +36,10 @@ chrome.runtime.onConnect.addListener((port) => {
     console.log('[Background] Received message:', message.type);
 
     if (message.type === 'START_TASK') {
-      await handleStartTask(message.payload.task, port, message.payload.visionMode);
+      await handleStartTask(message.payload.task, port, message.payload.modelId);
     } else if (message.type === 'CANCEL_TASK') {
       executor.cancel();
+      visionExecutor.cancel();
     }
   });
 
@@ -55,7 +56,7 @@ chrome.runtime.onConnect.addListener((port) => {
 async function handleStartTask(
   task: string,
   port: chrome.runtime.Port,
-  visionMode: boolean = false
+  modelId?: string
 ): Promise<void> {
   // Get the active tab
   const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
@@ -76,37 +77,19 @@ async function handleStartTask(
     }
   };
 
-  // Set up event forwarding based on mode
-  const unsubscribe = visionMode
-    ? visionExecutor.onEvent(handleEvent)
-    : executor.onEvent(handleEvent);
+  // Set up event forwarding
+  const unsubscribe = executor.onEvent(handleEvent);
 
   try {
-    let result: string;
+    console.log('[Background] Starting task with model:', modelId || 'default');
 
-    if (visionMode) {
-      console.log('[Background] Vision mode - using screenshot-based navigation');
-
-      // Use VisionExecutor for screenshot-based navigation
-      result = await visionExecutor.executeTask(
-        task,
-        async () => {
-          const tab = await chrome.tabs.get(currentTabId!);
-          return { url: tab.url || 'unknown', title: tab.title || 'Unknown' };
-        },
-        (actionType, params) => executeAction(currentTabId!, actionType, params),
-        currentTabId!
-      );
-    } else {
-      console.log('[Background] Standard mode - using DOM-based navigation');
-
-      // Use standard executor for DOM-based navigation
-      result = await executor.executeTask(
-        task,
-        () => getDOMState(currentTabId!),
-        (actionType, params) => executeAction(currentTabId!, actionType, params)
-      );
-    }
+    // Use standard executor for DOM-based navigation
+    const result = await executor.executeTask(
+      task,
+      () => getDOMState(currentTabId!),
+      (actionType, params) => executeAction(currentTabId!, actionType, params),
+      modelId
+    );
 
     port.postMessage({ type: 'TASK_RESULT', result });
   } catch (error) {

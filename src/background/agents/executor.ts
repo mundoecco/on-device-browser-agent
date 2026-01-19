@@ -46,11 +46,13 @@ export class Executor {
    * @param task - Natural language task description
    * @param getDOMState - Function to get current DOM state from content script
    * @param executeAction - Function to execute actions in the browser
+   * @param modelId - Optional model ID to use for LLM inference
    */
   async executeTask(
     task: string,
     getDOMState: GetDOMStateFn,
-    executeAction: ExecuteActionFn
+    executeAction: ExecuteActionFn,
+    modelId?: string
   ): Promise<string> {
     if (this.isRunning) {
       throw new Error('Executor is already running a task');
@@ -68,7 +70,7 @@ export class Executor {
       });
 
       try {
-        await llmEngine.initialize();
+        await llmEngine.initialize(modelId);
         unsubscribe();
         this.emit({ type: 'INIT_COMPLETE' });
       } catch (error) {

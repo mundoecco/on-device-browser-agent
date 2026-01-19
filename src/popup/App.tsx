@@ -202,7 +202,7 @@ export function App(): React.ReactElement {
 
   // Submit a new task
   const handleSubmitTask = useCallback(
-    (task: string, visionMode: boolean = false) => {
+    (task: string, modelId: string) => {
       // Try to reconnect if port is disconnected
       if (!port) {
         console.log('[Popup] Port disconnected, attempting to reconnect...');
@@ -237,7 +237,7 @@ export function App(): React.ReactElement {
           setResult(null);
           setError(null);
 
-          newPort.postMessage({ type: 'START_TASK', payload: { task, visionMode } });
+          newPort.postMessage({ type: 'START_TASK', payload: { task, modelId } });
           return;
         } catch (err) {
           console.error('[Popup] Reconnection failed:', err);
@@ -256,10 +256,21 @@ export function App(): React.ReactElement {
       setError(null);
 
       // Send task to background
-      port.postMessage({ type: 'START_TASK', payload: { task, visionMode } });
+      port.postMessage({ type: 'START_TASK', payload: { task, modelId } });
     },
     [port, handleExecutorEvent]
   );
+
+  // Cancel the running task
+  const handleCancel = useCallback(() => {
+    if (port) {
+      port.postMessage({ type: 'CANCEL_TASK' });
+      setState('idle');
+      setModelProgress(0);
+      setPlan([]);
+      setSteps([]);
+    }
+  }, [port]);
 
   // Reset to initial state
   const handleReset = useCallback(() => {
@@ -281,10 +292,22 @@ export function App(): React.ReactElement {
       <main className="main">
         {state === 'idle' && <TaskInput onSubmit={handleSubmitTask} />}
 
-        {state === 'loading' && <ModelStatus progress={modelProgress} />}
+        {state === 'loading' && (
+          <>
+            <ModelStatus progress={modelProgress} />
+            <button className="stop-button" onClick={handleCancel}>
+              Stop
+            </button>
+          </>
+        )}
 
         {(state === 'planning' || state === 'executing') && (
-          <ProgressDisplay state={state} plan={plan} steps={steps} />
+          <>
+            <ProgressDisplay state={state} plan={plan} steps={steps} />
+            <button className="stop-button" onClick={handleCancel}>
+              Stop Task
+            </button>
+          </>
         )}
 
         {state === 'complete' && result && (

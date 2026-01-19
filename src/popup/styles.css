@@ -436,42 +436,62 @@ body {
 }
 
 /* ============================================================================
-   Vision Mode Toggle
+   Model Selection
    ============================================================================ */
 
-.vision-toggle {
-  padding: 10px 12px;
-  background: #f8f9ff;
-  border: 1px solid #e0e0f0;
-  border-radius: 8px;
-}
-
-.toggle-label {
+.model-select {
   display: flex;
   align-items: center;
   gap: 8px;
-  cursor: pointer;
-  user-select: none;
+  padding: 8px 0;
 }
 
-.toggle-label input[type="checkbox"] {
-  width: 16px;
-  height: 16px;
-  accent-color: #667eea;
-  cursor: pointer;
-}
-
-.toggle-text {
+.model-select label {
   font-size: 13px;
   font-weight: 500;
-  color: #333;
+  color: #555;
 }
 
-.vision-hint {
-  margin-top: 8px;
-  padding-top: 8px;
-  border-top: 1px solid #e0e0f0;
-  font-size: 11px;
-  color: #666;
-  line-height: 1.4;
+.model-select select {
+  flex: 1;
+  padding: 8px 12px;
+  border: 1px solid #e0e0e0;
+  border-radius: 6px;
+  font-size: 13px;
+  font-family: inherit;
+  background: white;
+  cursor: pointer;
+  transition: border-color 0.2s;
+}
+
+.model-select select:focus {
+  outline: none;
+  border-color: #667eea;
+}
+
+/* ============================================================================
+   Stop Button
+   ============================================================================ */
+
+.stop-button {
+  width: 100%;
+  margin-top: 12px;
+  padding: 10px 20px;
+  background: #ef4444;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s, transform 0.2s;
+}
+
+.stop-button:hover {
+  background: #dc2626;
+  transform: translateY(-1px);
+}
+
+.stop-button:active {
+  transform: translateY(0);
 }

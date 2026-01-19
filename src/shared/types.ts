@@ -134,7 +134,7 @@ export interface AgentStep {
 
 export interface StartTaskMessage {
   type: 'START_TASK';
-  payload: { task: string; visionMode?: boolean };
+  payload: { task: string; modelId?: string };
 }
 
 export interface CancelTaskMessage {

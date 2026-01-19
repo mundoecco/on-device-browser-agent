@@ -9,6 +9,16 @@
 export const DEFAULT_MODEL = 'Qwen2.5-1.5B-Instruct-q4f16_1-MLC';
 
 /**
+ * Available models for user selection
+ * Ordered by size (smaller to larger)
+ */
+export const AVAILABLE_MODELS = [
+  { id: 'Llama-3.2-1B-Instruct-q4f16_1-MLC', name: 'Llama 3.2 1B (Fastest)', size: '0.6 GB' },
+  { id: 'Qwen2.5-1.5B-Instruct-q4f16_1-MLC', name: 'Qwen 2.5 1.5B (Recommended)', size: '1.0 GB' },
+  { id: 'Phi-3.5-mini-instruct-q4f16_1-MLC', name: 'Phi 3.5 Mini 3.8B (Best)', size: '2.2 GB' },
+];
+
+/**
  * Fallback models if the default fails to load
  */
 export const FALLBACK_MODELS = [

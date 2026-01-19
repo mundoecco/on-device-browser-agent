@@ -5,10 +5,10 @@
  */
 
 import React, { useState, useCallback } from 'react';
+import { AVAILABLE_MODELS, DEFAULT_MODEL } from '../../shared/constants';
 
 interface TaskInputProps {
-  onSubmit: (task: string, visionMode: boolean) => void;
-  visionModeSupported?: boolean;
+  onSubmit: (task: string, modelId: string) => void;
 }
 
 const EXAMPLE_TASKS = [
@@ -17,18 +17,18 @@ const EXAMPLE_TASKS = [
   'Go to example.com and tell me what\'s there',
 ];
 
-export function TaskInput({ onSubmit, visionModeSupported = false }: TaskInputProps): React.ReactElement {
+export function TaskInput({ onSubmit }: TaskInputProps): React.ReactElement {
   const [task, setTask] = useState('');
-  const [visionMode, setVisionMode] = useState(false);
+  const [modelId, setModelId] = useState(DEFAULT_MODEL);
 
   const handleSubmit = useCallback(
     (e: React.FormEvent) => {
       e.preventDefault();
       if (task.trim()) {
-        onSubmit(task.trim(), visionMode);
+        onSubmit(task.trim(), modelId);
       }
     },
-    [task, visionMode, onSubmit]
+    [task, modelId, onSubmit]
   );
 
   const handleExampleClick = useCallback((example: string) => {
@@ -44,26 +44,20 @@ export function TaskInput({ onSubmit, visionModeSupported = false }: TaskInputPr
         autoFocus
       />
 
-      {visionModeSupported && (
-        <div className="vision-toggle">
-          <label className="toggle-label">
-            <input
-              type="checkbox"
-              checked={visionMode}
-              onChange={(e) => setVisionMode(e.target.checked)}
-            />
-            <span className="toggle-text">
-              Vision Mode (use screenshots)
-            </span>
-          </label>
-          {visionMode && (
-            <div className="vision-hint">
-              Uses VLM to analyze page screenshots instead of DOM parsing.
-              More accurate but slower.
-            </div>
-          )}
-        </div>
-      )}
+      <div className="model-select">
+        <label htmlFor="model-select">Model:</label>
+        <select
+          id="model-select"
+          value={modelId}
+          onChange={(e) => setModelId(e.target.value)}
+        >
+          {AVAILABLE_MODELS.map((model) => (
+            <option key={model.id} value={model.id}>
+              {model.name} ({model.size})
+            </option>
+          ))}
+        </select>
+      </div>
 
       <button type="submit" disabled={!task.trim()}>
         Run Task

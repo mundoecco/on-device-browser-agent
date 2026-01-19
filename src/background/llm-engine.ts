@@ -93,16 +93,27 @@ class LLMEngineManager {
   /**
    * Initialize the WebLLM engine with the specified model
    */
-  async initialize(modelId: string = DEFAULT_MODEL): Promise<void> {
-    if (this.initializationPromise && this.state.currentModel === modelId) {
-      return this.initializationPromise;
-    }
+  async initialize(modelId?: string): Promise<void> {
+    const targetModel = modelId || DEFAULT_MODEL;
 
-    if (this.state.ready && this.state.currentModel === modelId) {
+    // If already initialized with the same model, skip
+    if (this.state.ready && this.state.currentModel === targetModel) {
+      console.log(`[LLM Engine] Already initialized with ${targetModel}`);
       return;
     }
 
-    this.initializationPromise = this.doInitialize(modelId);
+    // If currently initializing the same model, wait for it
+    if (this.initializationPromise && this.state.currentModel === targetModel) {
+      return this.initializationPromise;
+    }
+
+    // Reset if switching to a different model
+    if (this.state.currentModel && this.state.currentModel !== targetModel) {
+      console.log(`[LLM Engine] Switching model from ${this.state.currentModel} to ${targetModel}`);
+      await this.reset();
+    }
+
+    this.initializationPromise = this.doInitialize(targetModel);
     return this.initializationPromise;
   }
 
