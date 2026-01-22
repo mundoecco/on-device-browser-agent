@@ -1,5 +1,7 @@
 # Local Browser - On-Device AI Web Automation
 
+# Launching support for runanywhere-web-sdk soon in our main repo: please go check it out: https://github.com/RunanywhereAI/runanywhere-sdks
+
 A Chrome extension that uses WebLLM to run AI-powered web automation entirely on-device. No cloud APIs, no API keys, fully private.
 
 ## Demo
